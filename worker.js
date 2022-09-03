@@ -54,8 +54,7 @@ export class Analytics {
       const { url, method } = req
       const { tlsClientAuth, tlsExportedAuthenticator, ...cf } = req.cf
 //       const { origin, hostname, pathname, search, searchParams, hash } = new URL(url)
-      const query = Object.fromEntries(searchParams)
-      const headers = Object.fromEntries(req.headers)
+
       const ts = Date.now()
       const time = new Date(ts).toISOString()
       const id = req.headers.get('cf-ray')
@@ -63,6 +62,8 @@ export class Analytics {
       const ua = req.headers.get('user-agent')
       const referer = punycode.decode(req.headers.get('referer'))
       const { origin, hostname, pathname, search, searchParams, hash } = new URL(referer)
+      const query = Object.fromEntries(searchParams)
+      const headers = Object.fromEntries(req.headers)
 //       const body = req.body ? await req.json() : undefined
       
       const event = { id, ip, ts, time, url, method, origin, hostname, pathname, search, query, hash, ua, referer, cf, headers, body }
