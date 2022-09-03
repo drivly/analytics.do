@@ -54,6 +54,7 @@ export class Analytics {
       const event = { id, ip, ts, time, url, method, origin, hostname, pathname, search, query, hash, ua, referer, headers, body }
       
       this.state.storage.put(id, event)
+      this.state.storage.put(`id:${id}:ip:${ip}:url:${url} -> ${id}`, 'https://analytics.do/api/' + id)
       this.state.storage.put(`ip:${ip} -> ${id}`, 'https://analytics.do/api/' + id)
       this.state.storage.put(`ts:${ts} -> ${id}`, 'https://analytics.do/api/' + id)
       this.state.storage.put(`time:${time} -> ${id}`, 'https://analytics.do/api/' + id)
