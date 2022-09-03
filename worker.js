@@ -33,7 +33,7 @@ export class Analytics {
   async fetch(req) {
     if (req.url.startsWith('https://analytics.do/api')) {
       const { pathname, search, searchParams } = new URL(req.url)
-      const options = search == "" ? { prefix: 'url:' } : Object.fromEntries(searchParams)
+      const options = search == "" ? { prefix: 'id:' } : Object.fromEntries(searchParams)
       const data = await this.state.storage.list(options).then(list => Object.fromEntries(list))
       return new Response(JSON.stringify(data))
     } else {
@@ -54,17 +54,17 @@ export class Analytics {
       const event = { id, ip, ts, time, url, method, origin, hostname, pathname, search, query, hash, ua, referer, headers, body }
       
       this.state.storage.put(id, event)
-      this.state.storage.put(`ip:${ip}:${id}`, 'https://analytics.do/api/' + id)
-      this.state.storage.put(`ts:${ts}:${id}`, 'https://analytics.do/api/' + id)
-      this.state.storage.put(`time:${time}:${id}`, 'https://analytics.do/api/' + id)
-      this.state.storage.put(`url:${url}:${id}`, 'https://analytics.do/api/' + id)
-      this.state.storage.put(`method:${method}:${id}`, 'https://analytics.do/api/' + id)
-      this.state.storage.put(`origin:${origin}:${id}`, 'https://analytics.do/api/' + id)
-      this.state.storage.put(`hostname:${hostname}:${id}`, 'https://analytics.do/api/' + id)
-      this.state.storage.put(`pathname:${pathname}:${id}`, 'https://analytics.do/api/' + id)
-      this.state.storage.put(`search:${search}:${id}`, 'https://analytics.do/api/' + id)
-      this.state.storage.put(`hash:${hash}:${id}`, 'https://analytics.do/api/' + id)
-      this.state.storage.put(`ua:${ua}:${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`ip:${ip} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`ts:${ts} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`time:${time} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`url:${url} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`method:${method} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`origin:${origin} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`hostname:${hostname} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`pathname:${pathname} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`search:${search} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`hash:${hash} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`ua:${ua} -> ${id}`, 'https://analytics.do/api/' + id)
       this.state.storage.put(`referer:${referer}:${id}`, 'https://analytics.do/api/' + id)
       this.state.storage.put(`cf.clientTcpRtt:${cf.clientTcpRtt}:${id}`, 'https://analytics.do/api/' + id)
       this.state.storage.put(`cf.longitude:${cf.longitude}:${id}`, 'https://analytics.do/api/' + id)
