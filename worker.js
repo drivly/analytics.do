@@ -36,8 +36,8 @@ export class Analytics {
       const [ _, __, id ] = pathname.split('/')
       if (id) {
         const data = await this.state.storage.get(id)
-        //const links = Object.entries(data) //.map(([key, value]) => `https://analytics.do/api?prefix=${key}:${value}`)
-        return new Response(JSON.stringify({data}))
+        const links = Object.entries(data) //.map(([key, value]) => `https://analytics.do/api?prefix=${key}:${value}`)
+        return new Response(JSON.stringify({data,links}))
       } else {
         const options = search == "" ? { prefix: 'id:' } : Object.fromEntries(searchParams)
         const data = await this.state.storage.list(options).then(list => Object.fromEntries(list))
