@@ -64,7 +64,7 @@ export class Analytics {
       
       this.state.storage.put(id, event)
       this.state.storage.put(`id:${id}:url:${referer?.replace('https://')}:colo:${cf.colo} -> ${id}`, 'https://analytics.do/api/' + id)
-      Object.entries(flatten(data)).map(([key, value]) => this.state.storage.put(`${key}:${value} -> ${id}`, 'https://analytics.do/api/' + id))
+      Object.entries(flatten(event)).map(([key, value]) => this.state.storage.put(`${key}:${value} -> ${id}`, 'https://analytics.do/api/' + id))
 //       this.state.storage.put(`ip:${ip} -> ${id}`, 'https://analytics.do/api/' + id)
 //       this.state.storage.put(`ts:${ts} -> ${id}`, 'https://analytics.do/api/' + id)
 //       this.state.storage.put(`time:${time} -> ${id}`, 'https://analytics.do/api/' + id)
