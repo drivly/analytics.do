@@ -63,12 +63,11 @@ export class Analytics {
       const referer = req.headers.get('referer')
       let { origin, hostname, pathname, search, searchParams, hash } = new URL(referer ?? url)
       hostname = punycode.toUnicode(hostname)
-      origin = punycode.toUnicode(origin)
       const query = Object.fromEntries(searchParams)
       const headers = Object.fromEntries(req.headers)
 //       const body = req.body ? await req.json() : undefined
       
-      const event = { id, ip, ts, time, url, method, origin, hostname, punycode: hostname.startsWith('xn--') ? punycode.encode(hostname) : undefined, pathname, search, query, hash, ua, referer, cf, headers, body }
+      const event = { id, ip, ts, time, url, method, origin, hostname, punycode: hostname.startsWith('xn--') ? punycode.toASCII(hostname) : undefined, pathname, search, query, hash, ua, referer, cf, headers, body }
       
       this.state.storage.put(id, event)
       this.state.storage.put(`idx: ${id} url:${hostname + pathname} colo:${cf.colo} -> ${id}`, 'https://analytics.do/api/' + id)
