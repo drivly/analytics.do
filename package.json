@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "flat": "^5.0.2"
+    "flat": "^5.0.2",
+    "punycode": "^2.1.1"
   }
 }
