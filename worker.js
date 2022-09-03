@@ -37,11 +37,11 @@ export class Analytics {
       if (id) {
         const data = await this.state.storage.get(id)
         const links = Object.entries(data).map(([key, value]) => `https://analytics.do/api?prefix=${key}:${value}`)
-        return new Response(JSON.stringify({_, id, data, links}))
+        return new Response(JSON.stringify({data, links}))
       } else {
         const options = search == "" ? { prefix: 'id:' } : Object.fromEntries(searchParams)
         const data = await this.state.storage.list(options).then(list => Object.fromEntries(list))
-        return new Response(JSON.stringify({_,id,data}))
+        return new Response(JSON.stringify(data))
       }
     } else {
       
