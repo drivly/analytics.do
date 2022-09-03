@@ -39,7 +39,7 @@ export class Analytics {
       if (id) {
         const data = await this.state.storage.get(id)
         const links = Object.entries(flatten(data)).reduce((acc, [key, value]) => ({...acc, [`${key}: ${value}`]: `https://analytics.do/api?prefix=${key}:${value}`}), {})
-        return new Response(JSON.stringify({data,links}))
+        return new Response(JSON.stringify({user, redirect, body, data, links}))
       } else {
         const options = search == "" ? { prefix: 'id:' } : Object.fromEntries(searchParams)
         const data = await this.state.storage.list(options).then(list => Object.fromEntries(list))
