@@ -3,7 +3,7 @@ export default {
     const { user, redirect, body } = await env.CTX.fetch(req).then(res => res.json())
     if (redirect) return Response.redirect(redirect)
     const { origin, pathname, search } = new URL(req.url)
-    env.ANALYTICS.get(env.ANALYTICS.idFromName(new URL(req.url).hostname)).fetch(req)
+    const data = env.ANALYTICS.get(env.ANALYTICS.idFromName('analytics')).fetch(req).then(res => res.json())
      
     return new Response(JSON.stringify({
       api: {
@@ -19,6 +19,7 @@ export default {
         type: 'https://apis.do',
         repo: 'https://github.com/drivly/analytics.do',
       },
+      data,
       user,
     }, null, 2), { headers: { 'content-type': 'application/json; charset=utf-8' }}) 
   }
