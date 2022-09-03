@@ -1,3 +1,5 @@
+import flatten from 'flat'
+
 export default {
   fetch: async (req, env) => {
     const { user, redirect, body } = await env.CTX.fetch(req).then(res => res.json())
@@ -36,7 +38,7 @@ export class Analytics {
       const [ _, __, id ] = pathname.split('/')
       if (id) {
         const data = await this.state.storage.get(id)
-        const links = Object.entries(data).reduce((acc, [key, value]) => ({...acc, [`${key}:${value}`]: `https://analytics.do/api?prefix=${key}:${value}`}), {})
+        const links = Object.entries(flatten(data)).reduce((acc, [key, value]) => ({...acc, [`${key}:${value}`]: `https://analytics.do/api?prefix=${key}:${value}`}), {})
         return new Response(JSON.stringify({data,links}))
       } else {
         const options = search == "" ? { prefix: 'id:' } : Object.fromEntries(searchParams)
