@@ -3,7 +3,7 @@ export default {
     const { user, redirect, body } = await env.CTX.fetch(req).then(res => res.json())
     if (redirect) return Response.redirect(redirect)
     const { origin, pathname, search } = new URL(req.url)
-    const data = env.ANALYTICS.get(env.ANALYTICS.idFromName('analytics')).fetch(req).then(res => res.json())
+    const data = await env.ANALYTICS.get(env.ANALYTICS.idFromName('analytics')).fetch(req).then(res => res.json())
      
     return new Response(JSON.stringify({
       api: {
