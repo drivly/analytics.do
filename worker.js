@@ -1,4 +1,5 @@
 import flatten from 'flat'
+import punycode from 'punycode'
 
 export default {
   fetch: async (req, env) => {
@@ -50,7 +51,7 @@ export class Analytics {
       
       const { url, method } = req
       const { tlsClientAuth, tlsExportedAuthenticator, ...cf } = req.cf
-      const { origin, hostname, pathname, search, searchParams, hash } = new URL(url)
+//       const { origin, hostname, pathname, search, searchParams, hash } = new URL(url)
       const query = Object.fromEntries(searchParams)
       const headers = Object.fromEntries(req.headers)
       const ts = Date.now()
@@ -58,7 +59,8 @@ export class Analytics {
       const id = req.headers.get('cf-ray')
       const ip = req.headers.get('cf-connecting-ip')
       const ua = req.headers.get('user-agent')
-      const referer = req.headers.get('referer')
+      const referer = punycode.decode(req.headers.get('referer'))
+      const { origin, hostname, pathname, search, searchParams, hash } = new URL(referer)
 //       const body = req.body ? await req.json() : undefined
       
       const event = { id, ip, ts, time, url, method, origin, hostname, pathname, search, query, hash, ua, referer, cf, headers, body }
