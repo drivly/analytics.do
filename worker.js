@@ -3,7 +3,7 @@ import flatten from 'flat'
 export default {
   fetch: async (req, env) => {
     const { origin, pathname, search } = new URL(req.url)
-    const { data, user, redirect, body } = await env.ANALYTICS.get(env.ANALYTICS.idFromName('0.1')).fetch(req).then(res => res.json())
+    const { data, links, user, redirect, body } = await env.ANALYTICS.get(env.ANALYTICS.idFromName('0.1')).fetch(req).then(res => res.json())
     if (redirect) return Response.redirect(redirect)
      
     return new Response(JSON.stringify({
@@ -21,6 +21,7 @@ export default {
         repo: 'https://github.com/drivly/analytics.do',
       },
       data,
+      links,
       user,
     }, null, 2), { headers: { 'content-type': 'application/json; charset=utf-8' }}) 
   }
