@@ -2,8 +2,6 @@ import flatten from 'flat'
 
 export default {
   fetch: async (req, env) => {
-//     const { user, redirect, body } = await env.CTX.fetch(req).then(res => res.json())
-//     if (redirect) return Response.redirect(redirect)
     const { origin, pathname, search } = new URL(req.url)
     const { data, user, redirect, body } = await env.ANALYTICS.get(env.ANALYTICS.idFromName('0.1')).fetch(req).then(res => res.json())
     if (redirect) return Response.redirect(redirect)
