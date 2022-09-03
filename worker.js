@@ -40,7 +40,8 @@ export class Analytics {
       } else {
         const options = search == "" ? { prefix: 'id:' } : Object.fromEntries(searchParams)
         const data = await this.state.storage.list(options).then(list => Object.fromEntries(list))
-        return new Response(JSON.stringify({_,__,id,data}))
+        const links = Object.entries(data).map(([key, value]) => `https://analytics.do/api?prefix=${key}:${value}`)
+        return new Response(JSON.stringify({_,__,id,data,links}))
       }
     } else {
       
