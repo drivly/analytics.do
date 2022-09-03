@@ -33,9 +33,15 @@ export class Analytics {
   async fetch(req) {
     if (req.url.startsWith('https://analytics.do/api')) {
       const { pathname, search, searchParams } = new URL(req.url)
-      const options = search == "" ? { prefix: 'id:' } : Object.fromEntries(searchParams)
-      const data = await this.state.storage.list(options).then(list => Object.fromEntries(list))
-      return new Response(JSON.stringify(data))
+      const [ _, __, id ] = pathname.split('/')
+      if (id) {
+        const data = await this.state.storage.get(id).then(list => Object.fromEntries(list))
+        return new Response(JSON.stringify(data))
+      } else {
+        const options = search == "" ? { prefix: 'id:' } : Object.fromEntries(searchParams)
+        const data = await this.state.storage.list(options).then(list => Object.fromEntries(list))
+        return new Response(JSON.stringify({_,__,id,data}))
+      }
     } else {
       
       const { url, method } = req
