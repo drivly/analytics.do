@@ -43,11 +43,11 @@ export class Analytics {
       if (id) {
         const data = await this.state.storage.get(id)
         const links = Object.entries(flatten(data)).reduce((acc, [key, value]) => ({...acc, [`${key}: ${value}`]: `https://analytics.do/api?prefix=${key}: ${value}`}), {})
-        return new Response(JSON.stringify({user, redirect, body, data, links}))
+        return new Response(JSON.stringify({user, redirect, body, data, links}), { headers: { 'content-type': 'application/json; charset=utf-8' }})
       } else {
         const options = search == "" ? { prefix: 'idx:' } : Object.fromEntries(searchParams)
         const data = await this.state.storage.list(options).then(list => Object.fromEntries(list))
-        return new Response(JSON.stringify({user, redirect, body, data}))
+        return new Response(JSON.stringify({user, redirect, body, data}), { headers: { 'content-type': 'application/json; charset=utf-8' }})
       }
     } else {
       
