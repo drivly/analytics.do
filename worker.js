@@ -37,7 +37,7 @@ export class Analytics {
       return new Response(JSON.stringify(data))
     } else {
       
-      const { url, method, cf } = req
+      const { url, method } = req
       const { tlsClientAuth, tlsExportedAuthenticator, ...cf } = req.cf
       const { origin, hostname, pathname, search, searchParams, hash } = new URL(url)
       const query = Object.fromEntries(searchParams)
