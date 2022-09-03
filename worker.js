@@ -44,10 +44,10 @@ export class Analytics {
       const headers = Object.fromEntries(req.headers)
       const ts = Date.now()
       const time = new Date(ts).toISOString()
-      const id = headers.get('cf-ray')
-      const ip = headers.get('cf-connecting-ip')
-      const ua = headers.get('user-agent')
-      const referer = headers.get('referer')
+      const id = req.headers.get('cf-ray')
+      const ip = req.headers.get('cf-connecting-ip')
+      const ua = req.headers.get('user-agent')
+      const referer = req.headers.get('referer')
       const body = req.body ? await req.json() : undefined
       
       const event = { id, ip, ts, time, url, method, origin, hostname, pathname, search, query, hash, ua, referer, headers, body }
