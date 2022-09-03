@@ -32,7 +32,7 @@ export class Analytics {
     this.env = env
   }
   async fetch(req) {
-    const { user, redirect, body } = await env.CTX.fetch(req).then(res => res.json())
+    const { user, redirect, body } = await this.env.CTX.fetch(req).then(res => res.json())
     if (req.url.startsWith('https://analytics.do/api')) {
       const { pathname, search, searchParams } = new URL(req.url)
       const [ _, __, id ] = pathname.split('/')
