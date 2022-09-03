@@ -35,7 +35,7 @@ export class Analytics {
       const { pathname, search, searchParams } = new URL(req.url)
       const [ _, __, id ] = pathname.split('/')
       if (id) {
-        const data = await this.state.storage.get(id).then(list => Object.fromEntries(list))
+        const data = await this.state.storage.get(id)
         return new Response(JSON.stringify(data))
       } else {
         const options = search == "" ? { prefix: 'id:' } : Object.fromEntries(searchParams)
