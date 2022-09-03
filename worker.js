@@ -15,8 +15,10 @@ export default {
         url: 'https://analytics.do',
         api: 'https://analytics.do/api',
         endpoints: {
-          parse: origin + '/parse?prop=value',
-          generate: origin + '/:url',
+          capture: origin + '/event',
+          listEvents: origin + '/api',
+          searchEvents: origin + '/api?prefix=cf.botManagement.score',
+          getEvent: origin + '/api/:id',
         },
         type: 'https://apis.do',
         repo: 'https://github.com/drivly/analytics.do',
