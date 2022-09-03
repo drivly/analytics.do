@@ -4,7 +4,7 @@ import punycode from 'punycode'
 export default {
   fetch: async (req, env) => {
     const { origin, pathname, search } = new URL(req.url)
-    const { data, links, user, redirect, body } = await env.ANALYTICS.get(env.ANALYTICS.idFromName('0.1')).fetch(req).then(res => res.json())
+    const { data, links, user, redirect, body } = await env.ANALYTICS.get(env.ANALYTICS.idFromName('0.2')).fetch(req).then(res => res.json())
     if (redirect) return Response.redirect(redirect)
      
     return new Response(JSON.stringify({
@@ -45,7 +45,7 @@ export class Analytics {
         const links = Object.entries(flatten(data)).reduce((acc, [key, value]) => ({...acc, [`${key}: ${value}`]: `https://analytics.do/api?prefix=${key}: ${value}`}), {})
         return new Response(JSON.stringify({user, redirect, body, data, links}))
       } else {
-        const options = search == "" ? { prefix: 'id:' } : Object.fromEntries(searchParams)
+        const options = search == "" ? { prefix: 'idx:' } : Object.fromEntries(searchParams)
         const data = await this.state.storage.list(options).then(list => Object.fromEntries(list))
         return new Response(JSON.stringify({user, redirect, body, data}))
       }
@@ -71,7 +71,7 @@ export class Analytics {
       const event = { id, ip, ts, time, url, method, origin, hostname, punycode: hostname.startsWith('xn--') ? punycode.encode(hostname) : undefined, pathname, search, query, hash, ua, referer, cf, headers, body }
       
       this.state.storage.put(id, event)
-      this.state.storage.put(`id:${id}:url:${referer?.replace('https://')}:colo:${cf.colo} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`idx: ${id} url:${hostname + pathname} colo:${cf.colo} -> ${id}`, 'https://analytics.do/api/' + id)
       Object.entries(flatten(event)).map(([key, value]) => this.state.storage.put(`${key}: ${value} -> ${id}`, 'https://analytics.do/api/' + id))
       
       return new Response(JSON.stringify({ user, redirect, body, data: { stored: true }}))
