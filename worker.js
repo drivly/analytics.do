@@ -4,7 +4,7 @@ import punycode from 'punycode'
 export default {
   fetch: async (req, env) => {
     const { origin, pathname, search } = new URL(req.url)
-    const { data, links, user, redirect, body } = await env.ANALYTICS.get(env.ANALYTICS.idFromName('0.2')).fetch(req).then(res => res.json())
+    const { data, links, user, redirect, body } = await env.ANALYTICS.get(env.ANALYTICS.idFromName('0.3')).fetch(req).then(res => res.json())
     if (redirect) return Response.redirect(redirect)
      
     return new Response(JSON.stringify({
