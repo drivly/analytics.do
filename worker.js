@@ -33,7 +33,7 @@ export class Analytics {
   async fetch(req) {
     if (req.url.startsWith('https://analytics.do/api')) {
       const { pathname, search, searchParams } = new URL(req.url)
-      const [ _, id ] = pathname.split('/')
+      const [ _, __, id ] = pathname.split('/')
       if (id) {
         const data = await this.state.storage.get(id)
         //const links = Object.entries(data) //.map(([key, value]) => `https://analytics.do/api?prefix=${key}:${value}`)
