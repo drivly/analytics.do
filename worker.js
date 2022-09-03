@@ -57,7 +57,7 @@ export class Analytics {
       const referer = req.headers.get('referer')
       const body = req.body ? await req.json() : undefined
       
-      const event = { id, ip, ts, time, url, method, origin, hostname, pathname, search, query, hash, ua, referer, headers, body }
+      const event = { id, ip, ts, time, url, method, origin, hostname, pathname, search, query, hash, ua, referer, cf, headers, body }
       
       this.state.storage.put(id, event)
       this.state.storage.put(`id:${id}:ip:${ip}:url:${url} -> ${id}`, 'https://analytics.do/api/' + id)
