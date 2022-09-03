@@ -1,5 +1,5 @@
 export default {
-  fetch: (req, env) => {
+  fetch: async (req, env) => {
     const { user, redirect, body } = await env.CTX.fetch(req).then(res => res.json())
     if (redirect) return Response.redirect(redirect)
     const { origin, pathname, search } = new URL(req.url)
