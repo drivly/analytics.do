@@ -33,7 +33,7 @@ export class Analytics {
   async fetch(req) {
     if (req.url == 'https://analytics.do/api') {
       const options = Object.fromEntries(new URL(req.url).searchParams)
-      const data = await this.state.storage.list(options).then(list => Object.values(Object.fromEntries(list)))
+      const data = await this.state.storage.list(options).then(list => Object.fromEntries(list))
       return new Response(JSON.stringify(data))
     } else {
       
