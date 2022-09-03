@@ -70,7 +70,7 @@ export class Analytics {
       const event = { id, ip, ts, time, url, method, origin, hostname, punycode: hostname.startsWith('xn--') ? punycode.toASCII(hostname) : undefined, pathname, search, query, hash, ua, referer, cf, headers, body }
       
       this.state.storage.put(id, event)
-      this.state.storage.put(`idx: ${id} url:${hostname + pathname} colo:${cf.colo} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`idx: ${id}-${cf.colo} ${method} ${hostname + pathname} ${ip} ${cf.city}, ${cf.country} ${cf.asOrganization} -> ${id}`, 'https://analytics.do/api/' + id)
       Object.entries(flatten(event)).map(([key, value]) => this.state.storage.put(`${key}: ${value} -> ${id}`, 'https://analytics.do/api/' + id))
       
       return new Response(JSON.stringify({ user, redirect, body, data: { stored: true }}))
