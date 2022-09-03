@@ -2,10 +2,11 @@ import flatten from 'flat'
 
 export default {
   fetch: async (req, env) => {
-    const { user, redirect, body } = await env.CTX.fetch(req).then(res => res.json())
-    if (redirect) return Response.redirect(redirect)
+//     const { user, redirect, body } = await env.CTX.fetch(req).then(res => res.json())
+//     if (redirect) return Response.redirect(redirect)
     const { origin, pathname, search } = new URL(req.url)
-    const data = await env.ANALYTICS.get(env.ANALYTICS.idFromName('0.1')).fetch(req).then(res => res.json())
+    const { data, user, redirect, body } = await env.ANALYTICS.get(env.ANALYTICS.idFromName('0.1')).fetch(req).then(res => res.json())
+    if (redirect) return Response.redirect(redirect)
      
     return new Response(JSON.stringify({
       api: {
@@ -33,6 +34,7 @@ export class Analytics {
     this.env = env
   }
   async fetch(req) {
+    const { user, redirect, body } = await env.CTX.fetch(req).then(res => res.json())
     if (req.url.startsWith('https://analytics.do/api')) {
       const { pathname, search, searchParams } = new URL(req.url)
       const [ _, __, id ] = pathname.split('/')
@@ -43,7 +45,7 @@ export class Analytics {
       } else {
         const options = search == "" ? { prefix: 'id:' } : Object.fromEntries(searchParams)
         const data = await this.state.storage.list(options).then(list => Object.fromEntries(list))
-        return new Response(JSON.stringify(data))
+        return new Response(JSON.stringify({user, redirect, body, data}))
       }
     } else {
       
@@ -66,7 +68,7 @@ export class Analytics {
       this.state.storage.put(`id:${id}:url:${referer?.replace('https://')}:colo:${cf.colo} -> ${id}`, 'https://analytics.do/api/' + id)
       Object.entries(flatten(event)).map(([key, value]) => this.state.storage.put(`${key}: ${value} -> ${id}`, 'https://analytics.do/api/' + id))
       
-      return new Response(JSON.stringify({ stored: true }))
+      return new Response(JSON.stringify({ user, redirect, body, data: { stored: true }}))
     }
   }
 }
