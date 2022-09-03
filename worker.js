@@ -61,7 +61,7 @@ export class Analytics {
       const ip = req.headers.get('cf-connecting-ip')
       const ua = req.headers.get('user-agent')
       const referer = punycode.decode(req.headers.get('referer'))
-      const { origin, hostname, pathname, search, searchParams, hash } = new URL(referer)
+      const { origin, hostname, pathname, search, searchParams, hash } = new URL(referer ?? url)
       const query = Object.fromEntries(searchParams)
       const headers = Object.fromEntries(req.headers)
 //       const body = req.body ? await req.json() : undefined
