@@ -62,8 +62,8 @@ export class Analytics {
       const ua = req.headers.get('user-agent')
       const referer = req.headers.get('referer')
       let { origin, hostname, pathname, search, searchParams, hash } = new URL(referer ?? url)
-      hostname = punycode.decode(hostname)
-      origin = punycode.decode(origin)
+      hostname = punycode.toUnicode(hostname)
+      origin = punycode.toUnicode(origin)
       const query = Object.fromEntries(searchParams)
       const headers = Object.fromEntries(req.headers)
 //       const body = req.body ? await req.json() : undefined
