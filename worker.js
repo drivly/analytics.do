@@ -90,6 +90,7 @@ export class Analytics {
       this.state.storage.put(`cf.botManagement.corporateProxy:${cf.botManagement.corporateProxy} -> ${id}`, 'https://analytics.do/api/' + id)
       this.state.storage.put(`cf.botManagement.staticResource:${cf.botManagement.staticResource} -> ${id}`, 'https://analytics.do/api/' + id)
       this.state.storage.put(`cf.botManagement.verifiedBot:${cf.botManagement.verifiedBot} -> ${id}`, 'https://analytics.do/api/' + id)
+      this.state.storage.put(`cf.botManagement.ja3Hash:${cf.botManagement.ja3Hash} -> ${id}`, 'https://analytics.do/api/' + id)
       this.state.storage.put(`cf.botManagement.score:${cf.botManagement.score} -> ${id}`, 'https://analytics.do/api/' + id)
       this.state.storage.put(`cf.region:${cf.region} -> ${id}`, 'https://analytics.do/api/' + id)
       this.state.storage.put(`cf.regionCode:${cf.regionCode} -> ${id}`, 'https://analytics.do/api/' + id)
