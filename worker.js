@@ -33,7 +33,7 @@ export class Analytics {
   async fetch(req) {
     if (req.url.startsWith('https://analytics.do/api')) {
       const { pathname, search, searchParams } = new URL(req.url)
-      const [ _, __, id ] = pathname.split('/')
+      const [ _, id ] = pathname.split('/')
       if (id) {
         const data = await this.state.storage.get(id)
         return new Response(JSON.stringify(data))
@@ -41,7 +41,7 @@ export class Analytics {
         const options = search == "" ? { prefix: 'id:' } : Object.fromEntries(searchParams)
         const data = await this.state.storage.list(options).then(list => Object.fromEntries(list))
         const links = Object.entries(data).map(([key, value]) => `https://analytics.do/api?prefix=${key}:${value}`)
-        return new Response(JSON.stringify({_,__,id,data,links}))
+        return new Response(JSON.stringify({_,id,data,links}))
       }
     } else {
       
