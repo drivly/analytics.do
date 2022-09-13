@@ -61,7 +61,7 @@ export class Analytics {
       const ip = req.headers.get('cf-connecting-ip')
       const ua = req.headers.get('user-agent')
       const referer = req.headers.get('referer')
-      let { protocol, origin, hostname, pathname, search, searchParams, hash } = new URL(referer ?? url)
+      let { protocol, origin, hostname, pathname, search, searchParams, hash } = new URL(url.startsWith('https://analytics.do') ? referer ?? url : url)
       hostname = punycode.toUnicode(hostname)
       const query = Object.fromEntries(searchParams)
       const headers = Object.fromEntries(req.headers)
